@@ -1,0 +1,48 @@
+tasks.addRule("Pattern: zipPart<[1/2]>Week<ID>") { String taskName ->
+
+  def zipTask = taskName.toLowerCase() =~ /zippart([0-9]+)week([0-9]+)/
+  if (zipTask) {
+
+    def part = zipTask[0][1].toInteger()
+    def week = zipTask[0][2].toInteger()
+
+    // All Java source folders with the packages defined by the provided part and week:
+    def srcFolders = sourceSets.main.java.srcDirs.collect { srcDir ->
+      new File(
+        new File(srcDir, String.format('part%02d', part)), 
+        String.format('week%02d', week)
+      ) 
+    }
+
+    def courseraAssignments = [
+      2: [
+        1: 'wordnet.zip'
+      ]
+    ]
+
+    if (!courseraAssignments.containsKey(part)) {
+      task(taskName) << { 
+        throw new GradleException("No zip file was generated: No assignment corresponding to part #$part.") 
+      }
+    } else if (!courseraAssignments[part].containsKey(week)) {
+      task(taskName) << { 
+        throw new GradleException("No zip file was generated: No assignment corresponding to week #$week in part #$part.") 
+      }
+    } else if (!srcFolders.any { it.exists() }) {
+      task(taskName) << { 
+        throw new GradleException("No zip file was generated: Could not find any valid source folder in: $srcFolders.") 
+      }
+    } else {
+      task(taskName, type: Zip, dependsOn: check) {
+        from srcFolders
+        include '**/*.java'
+        archiveName courseraAssignments[part][week]
+        // Remove Java package and set it to the default:
+        filter { text -> text.replaceAll(/package .+;\s*/, '') }
+        // Flattens the folder structure:
+        eachFile { it.path = it.getName() }
+        includeEmptyDirs = false
+      }
+    }
+  }
+}

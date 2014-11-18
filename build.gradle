@@ -1,0 +1,19 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply from: 'gradle/coursera-algs.gradle'
+
+sourceCompatibility = 1.8
+
+repositories {
+  mavenCentral()
+}
+
+dependencies {
+  // Testing:
+  testCompile 'org.hamcrest:hamcrest-all:1.+'
+  testCompile('junit:junit:4.+') {
+    exclude group: 'org.hamcrest'
+  }
+  testCompile 'com.google.guava:guava-testlib:18.+'
+}

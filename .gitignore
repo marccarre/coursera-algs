@@ -1,0 +1,34 @@
+## Windows and OSX:
+Thumbs.db
+.DS_Store
+
+## Eclipse:
+.classpath
+.project
+.settings/
+
+## IntelliJ:
+.idea/
+*.iml
+*.ipr
+*.iws
+
+## Gradle:
+.gradle/
+build/
+gradle-app.setting
+
+## Java:
+*.class
+
+## Python:
+*.pyc
+
+## Python/virtualenv:
+.Python
+bin/
+include/
+lib/
+
+## Python/coverage:
+.coverage
