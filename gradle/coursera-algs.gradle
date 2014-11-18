@@ -39,6 +39,10 @@ tasks.addRule("Pattern: zipPart<[1/2]>Week<ID>") { String taskName ->
         archiveName courseraAssignments[part][week]
         // Remove Java package and set it to the default:
         filter { text -> text.replaceAll(/package .+;\s*/, '') }
+        // Change import statements to please grading system (which uses dependencies living in default package)
+        // See also: http://algs4.cs.princeton.edu/code
+        filter { text -> text.replaceAll('import edu.princeton.cs.algs4.', 'import ') }
+        filter { text -> text.replaceAll('import edu.princeton.cs.introcs.', 'import ') }
         // Flattens the folder structure:
         eachFile { it.path = it.getName() }
         includeEmptyDirs = false

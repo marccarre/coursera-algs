@@ -3,13 +3,16 @@ apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply from: 'gradle/coursera-algs.gradle'
 
-sourceCompatibility = 1.8
+sourceCompatibility = 1.7
 
 repositories {
   mavenCentral()
 }
 
 dependencies {
+  // Coursera/Princeton:
+  compile fileTree(dir: 'libs', include: ['*.jar'])
+
   // Testing:
   testCompile 'org.hamcrest:hamcrest-all:1.+'
   testCompile('junit:junit:4.+') {
