@@ -6,12 +6,16 @@ Thumbs.db
 .classpath
 .project
 .settings/
+.metadata/
 
 ## IntelliJ:
 .idea/
 *.iml
 *.ipr
 *.iws
+
+## Maven:
+target/
 
 ## Gradle:
 .gradle/
@@ -20,6 +24,9 @@ gradle-app.setting
 
 ## Java:
 *.class
+*.jar
+*.war
+*.ear
 
 ## Python:
 *.pyc
